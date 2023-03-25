@@ -30,7 +30,7 @@ def main():
             IN_GAME = False
             bad(encouragement, 2)
             #bad_control(control)
-            m.training(np.array(status_list), np.array(bad_control(control)), m.model)
+            m.training(np.array(status_list), np.array(bad_control(control_list)))
             status_list = []
             control_list = []
         # Eating apples
@@ -40,7 +40,7 @@ def main():
             s.create_block()
             good(encouragement)
             good_control(good)
-            m.training(np.array(status_list), control_list, m.model)
+            m.training(np.array(status_list), control_list)
             status_list = []
             control_list = []
         # Self-eating
@@ -56,12 +56,12 @@ def main():
         #s.root.after(100, main)
         status = [int(dist_w), int(dist_h), int(dist_tail_x), 
                   int(dist_tail_y), int(dist_apple_x), int(dist_apple_y)]#, last_status]
-        control = m.predict1(status, m.model)
+        control = m.predict1(status)
         control_list.append(control)
         status_list.append(status)
         #print('control_list =', control_list)
         #print('status_list =', status_list)
-        
+
         s.movement(control)
         s.root.update()
         IN_GAME -= 1
@@ -71,7 +71,7 @@ def main():
         s.reset_snake()
         s.c.delete(s.BLOCK)
         IN_GAME = True'''
-       
+
 def good(list):
     for i in range(len(list)):
         list[i] += 0.1

@@ -1,32 +1,38 @@
 import tensorflow as tf
-from keras import layers
+from keras import layers, Input
 from keras import models
+import numpy as np
 
 input_shape = (6, 1)
 
 class Model_NN():
     def __init__(self):
         self.model = models.Sequential()
-        self.model.add(layers.InputLayer(6,))
+        self.model.add(Input(shape = (6,)))
         self.model.add(layers.Dense(128, activation='sigmoid'))
         self.model.add(layers.Dense(64, activation='sigmoid'))
         self.model.add(layers.Dense(3))
         self.model.compile(loss='mse',
                       optimizer='adam',
                       metrics=['acc'])
-        
-    def training(self, x, y, model):
-        return model.train_on_batch(
-            x,
-            y,
+        self.model.summary()
+
+    def training(self, x, y):
+        print('Train X : ',x)
+        print('Train Y : ',y)
+        return self.model.train_on_batch(
+            np.array(x),
+            np.array(y),
             sample_weight=None,
             class_weight=None,
             reset_metrics=True,
             return_dict=False)
 
-    def predict1(self, x, model):
-        x = tf.reshape(x, shape=(1,6))
-        x00 =  model.predict(
+    def predict1(self, x):
+#        self.model.summary()
+        x = np.array([x])
+#        print(x.shape)
+        x00 =  self.model.predict(
             x,
             batch_size=None,
             verbose="auto",
