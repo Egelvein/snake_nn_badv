@@ -1,19 +1,17 @@
 import random
 from tkinter import Tk, Canvas
 
-WIDTH = 800
-HEIGHT = 600
+WIDTH = 400
+HEIGHT = 300
 SEG_SIZE = 20
 
 class Snake(object):
     """ Simple Snake class """
     def __init__(self):
-        #print('OKNO')
         self.root = Tk()
         self.root.title("Game 'Snake'")
         self.c = Canvas(self.root, width=WIDTH, height=HEIGHT, bg="#003300")
         self.c.grid()
-        #self.root.mainloop()
         self.segments = [self.create_snake_part(SEG_SIZE, SEG_SIZE),
                          self.create_snake_part(SEG_SIZE*2, SEG_SIZE),
                          self.create_snake_part(SEG_SIZE*3, SEG_SIZE)]
@@ -27,19 +25,19 @@ class Snake(object):
 
     def add_segment(self):
         """ Adds segment to the snake """
-        last_seg = c.coords(self.segments[0].instance)
+        last_seg = self.c.coords(self.segments[0])
         x = last_seg[2] - SEG_SIZE
         y = last_seg[3] - SEG_SIZE
         self.segments.insert(0, self.create_snake_part(x, y))
 
-    def change_direction(self, event):
+    '''def change_direction(self, event):
         """ Changes direction of snake """
         if event.keysym in self.mapping:
-            self.vector = self.mapping[event.keysym]
+            self.vector = self.mapping[event.keysym]'''
 
     def reset_snake(self):
         for segment in self.segments:
-            c.delete(segment.instance)
+            self.c.delete(segment)
 
     def create_block(self):
         """ Creates an apple to be eaten """
@@ -53,6 +51,13 @@ class Snake(object):
         #print(self.c.coords)
         return self.c.create_rectangle(x, y, x+SEG_SIZE, y+SEG_SIZE, fill="white")
 
+    def restart_game(self):
+            self.reset_snake()
+            self.segments = [self.create_snake_part(SEG_SIZE, SEG_SIZE),
+                             self.create_snake_part(SEG_SIZE*2, SEG_SIZE),
+                             self.create_snake_part(SEG_SIZE*3, SEG_SIZE)]
+            return self.segments
+    
     def movement(self, control = []):
         self.contr = control[0].argmax()
         if self.last_move == 1:

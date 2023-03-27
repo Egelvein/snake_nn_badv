@@ -1,6 +1,7 @@
 import tensorflow as tf
 from keras import layers, Input
 from keras import models
+from keras import optimizers
 import numpy as np
 
 input_shape = (6, 1)
@@ -13,13 +14,14 @@ class Model_NN():
         self.model.add(layers.Dense(64, activation='sigmoid'))
         self.model.add(layers.Dense(3))
         self.model.compile(loss='mse',
-                      optimizer='adam',
-                      metrics=['acc'])
+                           optimizer=optimizers.Adam(learning_rate=0.01),
+                           # Добавить learning_rate = 0.01 
+                           metrics=['acc'])
         self.model.summary()
 
     def training(self, x, y):
-        print('Train X : ',x)
-        print('Train Y : ',y)
+        #print('Train X : ',x)
+        #print('Train Y : ',y)
         return self.model.train_on_batch(
             np.array(x),
             np.array(y),
@@ -35,7 +37,7 @@ class Model_NN():
         x00 =  self.model.predict(
             x,
             batch_size=None,
-            verbose="auto",
+            verbose="null",
             steps=None,
             callbacks=None,
             max_queue_size=10,
