@@ -4,12 +4,12 @@ from keras import models
 from keras import optimizers
 import numpy as np
 
-input_shape = (6, 1)
+input_shape = (7, 1)
 
 class Model_NN():
     def __init__(self):
         self.model = models.Sequential()
-        self.model.add(Input(shape = (6,)))
+        self.model.add(Input(shape = (7,)))
         self.model.add(layers.Dense(128, activation='sigmoid'))
         self.model.add(layers.Dense(64, activation='sigmoid'))
         self.model.add(layers.Dense(3))
